@@ -1,0 +1,1 @@
+cmd_/home/polaris/course/Operating-Systems/Project/Project1/hello/hello.mod := { echo  /home/polaris/course/Operating-Systems/Project/Project1/hello/hello.o; echo; } > /home/polaris/course/Operating-Systems/Project/Project1/hello/hello.mod

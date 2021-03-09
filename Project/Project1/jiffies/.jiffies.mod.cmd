@@ -1,0 +1,1 @@
+cmd_/home/polaris/course/Operating-Systems/Project/Project1/jiffies/jiffies.mod := { echo  /home/polaris/course/Operating-Systems/Project/Project1/jiffies/jiffies.o; echo; } > /home/polaris/course/Operating-Systems/Project/Project1/jiffies/jiffies.mod

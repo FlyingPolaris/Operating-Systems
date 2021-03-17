@@ -8,6 +8,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #define MAX_LINE 80 /* 80 chars per line, per command */
 
@@ -96,7 +99,18 @@ int main(void)
 		}
 		else if (pid == 0)
 		{
-			
+			if (input_red)
+			{
+				int fd;
+				fd = open(input_file, O_RDONLY);
+				dup2(fd, STDIN_FILENO);
+			}
+			if(output_red)
+			{
+				int fd;
+				fd = open(output_file, O_RDWR);
+				dup2(fd, STDOUT_FILENO);
+			}
 		}
 		else
 		{

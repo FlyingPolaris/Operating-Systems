@@ -98,17 +98,21 @@ int main(void)
 
 		for (int i = 0; i < num_of_args; ++i)
 		{
-			if (strcmp(args[i], "<") == 0)
+			if (args[i] && strcmp(args[i], "<") == 0)
 			{
 				input_red = 1;
 				strcpy(input_file, args[i + 1]);
+				args[i] = args[i + 1] = NULL;
+				num_of_args -= 2;
 			}
-			if (strcmp(args[i], ">") == 0)
+			if (args[i] && strcmp(args[i], ">") == 0)
 			{
 				output_red = 1;
 				strcpy(output_file, args[i + 1]);
+				args[i] = args[i + 1] = NULL;
+				num_of_args -= 2;
 			}
-			if (strcmp(args[i], "|") == 0)
+			if (args[i] && strcmp(args[i], "|") == 0)
 			{
 				pipe_created = 1;
 				for (int j = i + 1; j < num_of_args; ++j)
@@ -137,7 +141,7 @@ int main(void)
 			if (output_red)
 			{
 				int fd;
-				fd = open(output_file, O_RDWR);
+				fd = open(output_file, O_CREAT | O_RDWR, S_IRWXU);
 				dup2(fd, STDOUT_FILENO);
 			}
 			if (pipe_created)

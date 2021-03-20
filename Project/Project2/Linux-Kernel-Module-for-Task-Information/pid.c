@@ -11,7 +11,7 @@
 #include <linux/kernel.h>
 #include <linux/proc_fs.h>
 #include <linux/vmalloc.h>
-#include <asm/uaccess.h>
+#include <linux/uaccess.h>
 
 #define BUFFER_SIZE 128
 #define PROC_NAME "pid"
@@ -28,6 +28,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
 static struct file_operations proc_ops = {
     .owner = THIS_MODULE,
     .read = proc_read,
+    .write = proc_write,
 };
 
 /* This function is called when the module is loaded. */
@@ -75,7 +76,7 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
         if (tsk == NULL)
                 rv = sprintf(buffer, "%d\n", 0);
         else
-                rv = sprintf(buffer, "command = [%s], pid = [%ld], state = [%d]\n", tsk->comm, l_pid, tsk->state);
+                rv = sprintf(buffer, "command = [%s], pid = [%ld], state = [%ld]\n", tsk->comm, l_pid, tsk->state);
         completed = 1;
 
         // copies the contents of kernel buffer to userspace usr_buf
@@ -105,7 +106,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
         }
 
         sscanf(k_mem, "%s", buffer);
-        kstrol(buffer, 10, l_pid);
+        kstrtol(buffer, 10, &l_pid);
 
         kfree(k_mem);
 

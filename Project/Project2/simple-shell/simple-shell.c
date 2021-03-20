@@ -58,16 +58,16 @@ int main(void)
 		}
 		args[num_of_args] = NULL;
 
-		if (strcmp(arg[0], "exit") == 0)
+		if (strcmp(args[0], "exit") == 0)
 		{
 			should_run = 0;
 			continue;
 		}
 
-		if (strcmp(arg[0], "!!") == 0)
+		if (strcmp(args[0], "!!") == 0)
 		{
 			get_into_history(args, history_args, history_num_of_args, history_exist);
-			if (strcmp(arg[0], "!!" == 0))
+			if (strcmp(args[0], "!!" == 0))
 				continue;
 		}
 		else

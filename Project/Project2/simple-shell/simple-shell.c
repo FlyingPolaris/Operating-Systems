@@ -74,6 +74,7 @@ int main(void)
 					args[i] = history_args[i];
 					printf("%s ", args[i]);
 				}
+				num_of_args = history_num_of_args;
 				printf("\n");
 			}
 			if (strcmp(args[0], "!!") == 0)
@@ -92,8 +93,8 @@ int main(void)
 		if (strcmp(args[num_of_args - 1], "&") == 0)
 		{
 			parent_wait = 0;
-			memset(args[num_of_args - 1], 0, sizeof(args[num_of_args - 1]));
 			num_of_args--;
+			args[num_of_args] = NULL;
 		}
 
 		for (int i = 0; i < num_of_args; ++i)
@@ -115,19 +116,22 @@ int main(void)
 			if (args[i] && strcmp(args[i], "|") == 0)
 			{
 				pipe_created = 1;
+				args[i] = NULL;
 				for (int j = i + 1; j < num_of_args; ++j)
 				{
 					strcpy(pipe_args[num_of_pipe_args], args[j]);
+					args[j] = NULL;
 					num_of_pipe_args++;
 				}
 				pipe_args[num_of_pipe_args] = NULL;
+				num_of_args -= num_of_pipe_args;
 			}
 		}
 
 		pid = fork();
 		if (pid < 0)
 		{
-			printf("Fail to fork.\n");
+			fprintf(stderr, "Fail to fork.\n");
 			return -1;
 		}
 		else if (pid == 0)
@@ -148,7 +152,7 @@ int main(void)
 			{
 				if (pipe(filedes) == -1)
 				{
-					fprintf(stderr, "Pipe failed");
+					fprintf(stderr, "Creating pipe failed.\n");
 					return 1;
 				}
 				else
@@ -156,7 +160,7 @@ int main(void)
 					pipe_pid = fork();
 					if (pipe_pid < 0)
 					{
-						fprintf(stderr, "Fork failed when creating pipe");
+						fprintf(stderr, "Fork failed when creating pipe.\n");
 						return 1;
 					}
 					else if (pipe_pid == 0)

@@ -26,7 +26,7 @@ int main(void)
 	int history_num_of_args;
 	char *args[MAX_LINE / 2 + 1]; /* command line (of 80) has max of 40 arguments */
 	char history_args[MAX_LINE / 2 + 1][MAX_LINE];
-	char pipe_args[MAX_LINE / 2 + 1][MAX_LINE];
+	char *pipe_args[MAX_LINE / 2 + 1];
 	int should_run = 1;
 	int input_red, output_red;
 	int pipe_created;
@@ -67,7 +67,7 @@ int main(void)
 		if (strcmp(args[0], "!!") == 0)
 		{
 			get_into_history(args, history_args, history_num_of_args, history_exist);
-			if (strcmp(args[0], "!!" == 0))
+			if (strcmp(args[0], "!!") == 0)
 				continue;
 		}
 		else
@@ -100,7 +100,7 @@ int main(void)
 				output_red = 1;
 				strcpy(output_file, args[i + 1]);
 			}
-			if (strcmp(args[i], "|" == 0))
+			if (strcmp(args[i], "|") == 0)
 			{
 				pipe_created = 1;
 				for (int j = i + 1; j < num_of_args; ++j)

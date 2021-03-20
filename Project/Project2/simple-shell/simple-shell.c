@@ -14,18 +14,16 @@
 
 #define MAX_LINE 80 /* 80 chars per line, per command */
 
-void get_into_history(char **, char **, int, int);
-
 int main(void)
 {
 	pid_t pid;
 	pid_t pipe_pid;
 	int parent_wait;
-	int history_exist;
+	int history_exist = 0;
 	int num_of_args;
 	int history_num_of_args;
 	char *args[MAX_LINE / 2 + 1]; /* command line (of 80) has max of 40 arguments */
-	char history_args[MAX_LINE / 2 + 1][MAX_LINE];
+	char history_args[MAX_LINE / 2 + 1][MAX_LINE / 2 + 1];
 	char *pipe_args[MAX_LINE / 2 + 1];
 	int should_run = 1;
 	int input_red, output_red;
@@ -46,7 +44,6 @@ int main(void)
 		num_of_args = 0;
 		num_of_pipe_args = 0;
 		parent_wait = 1;
-		history_exist = 0;
 		filedes[0] = filedes[1] = 0;
 		fgets(buffer, MAX_LINE, stdin);
 		char *token;
@@ -66,7 +63,19 @@ int main(void)
 
 		if (strcmp(args[0], "!!") == 0)
 		{
-			get_into_history(args, history_args, history_num_of_args, history_exist);
+			if (!history_exist)
+			{
+				printf("No commands in history.\n");
+			}
+			else
+			{
+				for (int i = 0; i < history_num_of_args; ++i)
+				{
+					args[i] = history_args[i];
+					printf("%s ", args[i]);
+				}
+				printf("\n");
+			}
 			if (strcmp(args[0], "!!") == 0)
 				continue;
 		}
@@ -76,7 +85,6 @@ int main(void)
 			history_num_of_args = num_of_args;
 			for (int i = 0; i < num_of_args; ++i)
 			{
-				memset(history_args[i], 0, sizeof(args[i]));
 				strcpy(history_args[i], args[i]);
 			}
 		}
@@ -173,7 +181,7 @@ int main(void)
 		}
 		else
 		{
-			if(parent_wait)
+			if (parent_wait)
 				wait(NULL);
 		}
 		/**
@@ -185,21 +193,4 @@ int main(void)
 	}
 
 	return 0;
-}
-
-void get_into_history(char **args, char **history_args, int history_num_of_args, int history_exist)
-{
-	if (!history_exist)
-	{
-		printf("No commands in history.\n");
-	}
-	else
-	{
-		for (int i = 0; i < history_num_of_args; ++i)
-		{
-			memset(args[i], 0, sizeof(history_args[i]));
-			strcpy(args[i], history_args[i]);
-			printf("%s ", args[i]);
-		}
-	}
 }

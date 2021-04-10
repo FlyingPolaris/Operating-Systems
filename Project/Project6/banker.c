@@ -6,11 +6,11 @@
 int read_file()
 {
     FILE *f;
-    f = fopen("test.txt", "r");
+    f = fopen("input.txt", "r");
     if (f == NULL)
     {
         fprintf(stderr, "File not found!\n");
-        return -1;
+        return 0;
     }
     else
     {
@@ -54,7 +54,7 @@ int request_resources(int num, int request[])
     for (int i = 0; i < NUMBER_OF_RESOURCES; ++i)
     {
         allocation_[num][i] += request[i];
-        need_[num][i] += request[i];
+        need_[num][i] -= request[i];
         available_[i] -= request[i];
     }
 
@@ -64,7 +64,7 @@ int request_resources(int num, int request[])
         for (int i = 0; i < NUMBER_OF_RESOURCES; ++i)
         {
             allocation[num][i] += request[i];
-            need[num][i] += request[i];
+            need[num][i] -= request[i];
             available[i] -= request[i];
         }
         printf("Safe. Resource allocation succeeded.\n");
@@ -117,10 +117,11 @@ void print_resources()
     for (int i = 0; i < NUMBER_OF_CUSTOMERS; ++i)
     {
         printf("P%d\t", i);
-        for (int j = 0; j < NUMBER_OF_RESOURCES; ++i)
+        for (int j = 0; j < NUMBER_OF_RESOURCES; ++j)
         {
             printf("%d\t", maximum[i][j]);
         }
+        printf("\n");
     }
     printf("\n");
     printf("\n");
@@ -129,10 +130,11 @@ void print_resources()
     for (int i = 0; i < NUMBER_OF_CUSTOMERS; ++i)
     {
         printf("P%d\t", i);
-        for (int j = 0; j < NUMBER_OF_RESOURCES; ++i)
+        for (int j = 0; j < NUMBER_OF_RESOURCES; ++j)
         {
             printf("%d\t", allocation[i][j]);
         }
+        printf("\n");
     }
     printf("\n");
     printf("\n");
@@ -141,10 +143,11 @@ void print_resources()
     for (int i = 0; i < NUMBER_OF_CUSTOMERS; ++i)
     {
         printf("P%d\t", i);
-        for (int j = 0; j < NUMBER_OF_RESOURCES; ++i)
+        for (int j = 0; j < NUMBER_OF_RESOURCES; ++j)
         {
             printf("%d\t", need[i][j]);
         }
+        printf("\n");
     }
     printf("\n");
 }
@@ -220,6 +223,7 @@ int main(int argc, char *argv[])
 
     while (1)
     {
+        printf(">>>");
         char ch[10];
         scanf("%s", ch);
         if (strcmp(ch, "exit") == 0)

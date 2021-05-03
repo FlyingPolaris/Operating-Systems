@@ -18,7 +18,33 @@
 
 
 
+a. FCFS：
 
+$2150\rightarrow2069\rightarrow1212\rightarrow2296\rightarrow2800\rightarrow544\rightarrow1618\rightarrow356\rightarrow1523\rightarrow4965\rightarrow3681$
+
+总距离为：
+
+$(2150-2069)+(2069-1212)+(2296-1212)+(2800-2296)+(2800-544)+(1618-544)+(1618-356)\\+(1523-356)+(4965-1523)+(4965-3681)=13011$
+
+
+
+b. SCAN：
+
+$2150 \rightarrow 2296 \rightarrow 2800 \rightarrow 3681 \rightarrow 4965 \rightarrow2069\rightarrow1618\rightarrow1523\rightarrow1212\rightarrow544\rightarrow356$
+
+总距离为：
+
+$(4999-2150)+(4999-356) = 7492$
+
+
+
+c. C-SCAN
+
+$2150 \rightarrow 2296 \rightarrow 2800 \rightarrow 3681 \rightarrow 4965 \rightarrow 356 \rightarrow 544 \rightarrow 1212 \rightarrow 1523 \rightarrow 1618 \rightarrow2069$
+
+总距离为：
+
+$(4999-2150) + 4999 + 2069 = 9917$
 
 ---
 
@@ -27,3 +53,10 @@
 **a. A write of one block of data**
 
 **b. A write of seven continuous blocks of data**
+
+
+
+a. 写一个数据块时，需要读写目标块及其对应的奇偶控制块，共访问2个块
+
+b. 写7个连续的数据块时，因为4个块为一组，需要访问这7个块和一个紧挨着的块，以及与之对应的两个奇偶控制块，共10个块
+

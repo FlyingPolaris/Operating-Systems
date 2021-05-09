@@ -1,1 +1,1 @@
-cmd_/home/polaris/course/Operating-Systems/Project/Project1/simple/simple.mod := { echo  /home/polaris/course/Operating-Systems/Project/Project1/simple/simple.o; echo; } > /home/polaris/course/Operating-Systems/Project/Project1/simple/simple.mod
+cmd_/home/polaris/course/Operating-Systems/Project/Project1/simple/simple.mod := { echo  /home/polaris/course/Operating-Systems/Project/Project1/simple/simple.o;  echo; } > /home/polaris/course/Operating-Systems/Project/Project1/simple/simple.mod

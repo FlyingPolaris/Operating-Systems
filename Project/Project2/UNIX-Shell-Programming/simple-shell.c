@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -119,7 +120,7 @@ int main(void)
 				args[i] = NULL;
 				for (int j = i + 1; j < num_of_args; ++j)
 				{
-					strcpy(pipe_args[num_of_pipe_args], args[j]);
+					pipe_args[num_of_pipe_args] = args[j];
 					args[j] = NULL;
 					num_of_pipe_args++;
 				}
@@ -165,18 +166,18 @@ int main(void)
 					}
 					else if (pipe_pid == 0)
 					{
-						close(filedes[1]);
-						dup2(filedes[0], STDOUT_FILENO);
-						execvp(pipe_args[0], pipe_args);
 						close(filedes[0]);
+						dup2(filedes[1], STDOUT_FILENO);
+						execvp(args[0], args);
+						close(filedes[1]);
 						exit(0);
 					}
 					else
 					{
-						close(filedes[0]);
-						dup2(filedes[1], STDIN_FILENO);
-						execvp(args[0], args);
 						close(filedes[1]);
+						dup2(filedes[0], STDIN_FILENO);
+						execvp(pipe_args[0], pipe_args);
+						close(filedes[0]);
 						wait(NULL);
 					}
 				}

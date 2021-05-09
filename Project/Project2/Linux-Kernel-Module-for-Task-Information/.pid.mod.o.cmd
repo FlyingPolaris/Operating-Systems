@@ -67,6 +67,7 @@ deps_/home/polaris/course/Operating-Systems/Project/Project2/Linux-Kernel-Module
     $(wildcard include/config/trace/branch/profiling.h) \
     $(wildcard include/config/profile/all/branches.h) \
     $(wildcard include/config/stack/validation.h) \
+    $(wildcard include/config/debug/entry.h) \
     $(wildcard include/config/kasan.h) \
   arch/x86/include/asm/barrier.h \
   arch/x86/include/asm/alternative.h \
@@ -303,7 +304,6 @@ deps_/home/polaris/course/Operating-Systems/Project/Project2/Linux-Kernel-Module
   arch/x86/include/uapi/asm/msr.h \
   include/linux/tracepoint-defs.h \
   arch/x86/include/asm/paravirt.h \
-    $(wildcard include/config/debug/entry.h) \
   arch/x86/include/asm/frame.h \
   arch/x86/include/asm/special_insns.h \
   arch/x86/include/asm/fpu/types.h \

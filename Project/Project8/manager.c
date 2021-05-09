@@ -106,7 +106,7 @@ int main(int argc, char **argv)
             {
                 tlb_hit_number++;
                 tlb_miss = pagefault = 0;
-                frame_number = tlb[i].page_number;
+                frame_number = tlb[i].frame_number;
                 tlb[i].latest_used = clk;
                 memory[frame_number].latest_used = clk;
                 break;
